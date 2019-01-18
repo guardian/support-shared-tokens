@@ -1,8 +1,7 @@
 const requireFromString = require('require-from-string');
 
-module.exports = {
-	loader: __dirname + '/loader.js',
-	apply: compiler => {
+class TargetToHtmlPlugin {
+	apply(compiler) {
 		compiler.plugin('emit', function(compilation, callback) {
 			compilation.chunks.forEach(function(chunk) {
 				chunk.files.filter(function(filename) {
@@ -22,5 +21,9 @@ module.exports = {
 
 			callback();
 		});
-	},
-};
+	}
+}
+
+TargetToHtmlPlugin.loader = __dirname + '/loader.js';
+
+module.exports = TargetToHtmlPlugin;

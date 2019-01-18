@@ -47,24 +47,32 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			clientSide: false,
 			open: false,
 			skin: skins[0].title,
 		};
 	}
+	componentDidMount() {
+		this.setState({ clientSide: true });
+	}
 	render() {
-		const { skin, open } = this.state;
+		const { skin, open, clientSide } = this.state;
 		return (
 			<header className={styles.base} data-skin={skin}>
 				<h1>
 					<i>🌜</i>
 				</h1>
-				<button
-					onClick={() => {
-						this.setState(({ open }) => ({ open: !open }));
-					}}
-				>
-					{open ? <i>❌</i> : <i>⬇️</i>}
-				</button>
+				{clientSide ? (
+					<button
+						onClick={() => {
+							this.setState(({ open }) => ({ open: !open }));
+						}}
+					>
+						{open ? <i>❌</i> : <i>⬇️</i>}
+					</button>
+				) : (
+					<div />
+				)}
 				{open && (
 					<Nav {...{ skin }} setSkin={skin => this.setState({ skin })} />
 				)}
