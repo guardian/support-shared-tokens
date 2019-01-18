@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
 	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname, './dist'),
+		path: path.resolve(__dirname, './local-test'),
 		filename: '[name].out.js',
 		libraryTarget: 'umd',
 	},
@@ -32,6 +32,6 @@ module.exports = {
 		extensions: ['*', '.js', '.jsx'],
 	},
 	devServer: {
-		contentBase: './dist',
+		contentBase: './local-test',
 	},
 };

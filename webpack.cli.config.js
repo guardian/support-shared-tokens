@@ -9,12 +9,11 @@ module.exports = {
 	...base,
 	output: {
 		...base.output,
-		path: path.resolve(__dirname, './modules'),
+		path: path.resolve(__dirname, './dist'),
 	},
 	target: 'node',
 	entry: {
-		//header: ['./static-target/header.js'],
-		head: ['./static-target/header.target'],
+		head: ['./targets/header.target'],
 	},
 	module: {
 		...base.module,

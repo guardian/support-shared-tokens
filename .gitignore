@@ -1,4 +1,4 @@
 node_modules
 /dist
-!/dist/index.html
-/modules
+/local-test
+!local-test/index.html
