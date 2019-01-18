@@ -1,4 +1,90 @@
+.base *,
 .base {
-	border: 2px solid black;
-	padding: 1em;
+	all: unset;
+	display: block;
+}
+
+.base {
+	--height: 4rem;
+	--bg: #fff;
+	--border: #000;
+	border: 2px solid var(--border);
+	background: var(--bg);
+	display: flex;
+	justify-content: space-between;
+	height: var(--height);
+	position: relative;
+}
+
+.base[data-skin='red'] {
+	--bg: red;
+	--border: #fff;
+}
+
+.base[data-skin='blue'] {
+	--bg: blue;
+}
+
+.base[data-skin='happy'] {
+	--bg: linear-gradient(
+		124deg,
+		#ff2400,
+		#e81d1d,
+		#e8b71d,
+		#e3e81d,
+		#1de840,
+		#1ddde8,
+		#2b1de8,
+		#dd00f3,
+		#dd00f3
+	);
+}
+
+.base i {
+	font-size: 2rem;
+	display: inline;
+}
+
+.base h1 {
+	height: var(--height);
+	width: var(--height);
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+}
+
+.base button {
+	cursor: pointer;
+}
+
+.base > button {
+	border: 2px solid var(--border);
+	height: var(--height);
+	width: var(--height);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: -2px;
+	cursor: pointer;
+}
+
+.base nav {
+	border: 2px solid var(--border);
+	position: absolute;
+	top: var(--height);
+	right: 0;
+	background: var(--bg);
+	margin: 0 -2px;
+	overflow: hidden;
+}
+
+.base nav ul > * {
+	border-bottom: 1px solid var(--border);
+	height: var(--height);
+	width: calc(var(--height) * 6);
+	padding: 0 1em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }

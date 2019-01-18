@@ -3,9 +3,14 @@ const nodeExternals = require('webpack-node-externals');
 const base = require('./webpack.config.js');
 const requireFromString = require('require-from-string');
 const TargetToHtmlPlugin = require('./webpack/TargetToHtmlPlugin');
+const path = require('path');
 
 module.exports = {
 	...base,
+	output: {
+		...base.output,
+		path: path.resolve(__dirname, './modules'),
+	},
 	target: 'node',
 	entry: {
 		//header: ['./static-target/header.js'],
