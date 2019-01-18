@@ -1,19 +1,25 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const nodeExternals = require('webpack-node-externals');
 const base = require('./webpack.config.js');
+const requireFromString = require('require-from-string');
+const TargetToHtmlPlugin = require('./webpack/TargetToHtmlPlugin');
 
 module.exports = {
 	...base,
 	target: 'node',
 	entry: {
-		header: ['./static-target/header.js'],
+		//header: ['./static-target/header.js'],
+		head: ['./static-target/header.target'],
 	},
 	module: {
 		...base.module,
 		rules: [
 			{
-				test: /\.(js|jsx)$/,
-				exclude: /node_modules/,
+				test: /\.target$/,
+				use: ['babel-loader', TargetToHtmlPlugin.loader],
+			},
+			{
+				test: /\.jsx$/,
 				use: ['babel-loader'],
 			},
 			{
@@ -34,11 +40,30 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			// Options similar to the same options in webpackOptions.output
 			// both options are optional
-			filename: '[name].css',
-			chunkFilename: '[id].css',
+			filename: '[name].out.css',
 		}),
 		{
-			apply: compiler => {},
+			apply: compiler => {
+				compiler.plugin('emit', function(compilation, callback) {
+					compilation.chunks.forEach(function(chunk) {
+						chunk.files.filter(function(filename) {
+							if (filename.includes('.js')) {
+								var src = compilation.assets[filename].source();
+								const m = requireFromString(src);
+								compilation.assets[filename.replace('.js', '.html')] = {
+									source: () => m.default,
+									size: () => m.default.length,
+								};
+								delete compilation.assets[filename];
+								return false;
+							}
+							return true;
+						});
+					});
+
+					callback();
+				});
+			},
 		},
 	],
 	externals: [nodeExternals()],
