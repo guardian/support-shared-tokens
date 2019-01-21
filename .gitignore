@@ -1,4 +1,2 @@
 node_modules
 /dist
-/local-test
-!local-test/index.html
